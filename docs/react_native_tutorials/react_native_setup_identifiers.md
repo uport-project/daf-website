@@ -136,6 +136,9 @@ import { Entities, KeyStore, DIDStore, IDataStoreORM } from '@veramo/data-store'
 
 // TypeORM is installed with @veramo/typeorm
 import { createConnection } from 'typeorm'
+
+// SQLite setup
+import { Initial1616938713828 } from '../migration/1616938713828-initial'
 ```
 
 Create an infura variable:
@@ -153,7 +156,8 @@ const dbConnection = createConnection({
   type: 'react-native',
   database: 'veramo.sqlite',
   location: 'default',
-  synchronize: true,
+  migrations: [ Initial1616938713828 ],
+  migrationsRun: true,
   logging: ['error', 'info', 'warn'],
   entities: Entities,
 })
@@ -194,6 +198,8 @@ export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataS
   ],
 })
 ```
+
+Then create a migrations file in `src/migration/1616938713828-initial.ts` and copy [this file](https://raw.githubusercontent.com/uport-project/veramo-website/master/docs/resources/1616938713828-initial.ts) into it.
 
 Awesome! That's the basic agent configured and ready to use. Let's try it out :rocket:
 

@@ -85,6 +85,9 @@ import { Entities, KeyStore, DIDStore, IDataStoreORM } from '@veramo/data-store'
 
 // TypeORM is installed with daf-typeorm
 import { createConnection } from 'typeorm'
+
+// SQLite setup
+import { Initial1616938713828 } from '../migration/1616938713828-initial'
 ```
 
 Create some variables that we will use later
@@ -103,7 +106,8 @@ Initialise a database using TypeORM
 const dbConnection = createConnection({
   type: 'sqlite',
   database: DATABASE_FILE,
-  synchronize: true,
+  migrations: [ Initial1616938713828 ],
+  migrationsRun: true,
   logging: ['error', 'info', 'warn'],
   entities: Entities,
 })
@@ -145,6 +149,8 @@ export const agent = createAgent<IDIDManager & IKeyManager & IDataStore & IDataS
   ],
 })
 ```
+
+Then create a migrations file in `src/migration/1616938713828-initial.ts` and copy [this file](https://raw.githubusercontent.com/uport-project/veramo-website/master/docs/resources/1616938713828-initial.ts) into it.
 
 That's the minimal agent setup complete. Let's use it to create and list identifiers.
 
